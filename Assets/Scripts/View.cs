@@ -14,12 +14,15 @@ public class View : MonoBehaviour
 
     public void RefreshData(int current)
     {
-        int common = current + SaveSystem.GetInstance().Data.CommonCount;
+        Data data = SaveSystem.GetInstance().Data;
+
+        int common = current + data.CommonCount;
 
         CommonText.text = common.KiloFormat();
         CurrentText.text = current.KiloFormat();
 
-        SaveSystem.GetInstance().Data.CommonCount = common;
+        data.CommonCount = common;
+        data.IsFirstOpen = false;
     }
 
     private void OnApplicationQuit()
