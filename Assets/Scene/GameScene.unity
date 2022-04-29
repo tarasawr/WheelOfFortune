@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -416,7 +416,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: f7fa85b74e1a1cc458bf4122ffdf1852, type: 3}
-    m_FontSize: 72
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1198,7 +1198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.7028302, b: 0.7028302, a: 1}
+  m_Color: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1207,10 +1207,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 0ef2ba47a25e9194eb3adac9edfaa72c, type: 3}
-    m_FontSize: 80
+    m_FontSize: 70
     m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 8
+    m_BestFit: 0
+    m_MinSize: 6
     m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1531,6 +1531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 759971784}
+  - component: {fileID: 759971785}
   m_Layer: 5
   m_Name: Info
   m_TagString: Untagged
@@ -1559,6 +1560,20 @@ RectTransform:
   m_AnchoredPosition: {x: 498.0876, y: 19}
   m_SizeDelta: {x: 702.0686, y: 826.1913}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &759971785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759971783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fce68b146886bc44a2491778d9f3557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CommonText: {fileID: 772089808}
+  CurrentText: {fileID: 1300587765}
 --- !u!1 &772089806
 GameObject:
   m_ObjectHideFlags: 0
@@ -2156,11 +2171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c348b638ecab67545980f3e7c562e88a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CommonCount: {fileID: 772089808}
-  Count: {fileID: 1300587765}
   Spin: {fileID: 709661840}
   CircleGo: {fileID: 736040818}
-  prize: 0a00000003000000040000000200000003000000050000000400000008000000020000000a0000000600000002000000030000000400000005000000060000000800000002000000
   PartsList:
   - {fileID: 336956107}
   - {fileID: 2014903145}
@@ -2428,7 +2440,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  _PlayerMultiplier: 0
 --- !u!1 &1300587763
 GameObject:
   m_ObjectHideFlags: 0

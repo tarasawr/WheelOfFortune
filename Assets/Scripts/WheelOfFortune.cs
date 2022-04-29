@@ -1,21 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class WheelOfFortune : MonoBehaviour
 {
-    public Text CommonCount;
-    public Text Count;
     public Button Spin;
     public GameObject CircleGo;
 
-    public List<int> prize;
     public List<Part> PartsList;
     public List<AnimationCurve> AnimCurves;
-
-    public int _PlayerMultiplier;
 
     private float _anglePart;
     private bool _isSpin;
@@ -23,8 +20,6 @@ public class WheelOfFortune : MonoBehaviour
 
     void Start()
     {
-        //Count.text = SaveSystem.GetInstance().Data.Count.ToString();
-        //CommonCount.text = SaveSystem.GetInstance().Data.CommonCount.ToString();
         InitWheel();
     }
 
@@ -32,20 +27,21 @@ public class WheelOfFortune : MonoBehaviour
     {
         _isSpin = false;
         Spin.interactable = true;
-        
+
         _anglePart = 360f / PartsList.Count;
-        
-        foreach (Part part in PartsList) 
-            part.Value = _partValues[Random.Range(0, _partValues.Length)];
-        
+
+        for (int i = 0; i < PartsList.Count; i++)
+        {
+            Part p = PartsList[i];
+            p.Value = _partValues[Random.Range(0, _partValues.Length)];
+            p.Angle = _anglePart * i;
+        }
+
         CircleGo.transform.eulerAngles = Vector3.zero;
     }
 
     public void StartSpin()
     {
-        Count.text = "0";
-        CommonCount.text = "0";
-        
         if (!_isSpin) StartCoroutine(Spining());
     }
 
@@ -55,32 +51,29 @@ public class WheelOfFortune : MonoBehaviour
         Spin.interactable = !_isSpin;
 
         int randomTime = Random.Range(1, 4);
-        
+
+        //maxAngle - коеф. скорости
         float maxAngle = 360 * randomTime + (PartsList.Count * _anglePart);
         float timer = 0.0f;
         float startAngle = CircleGo.transform.eulerAngles.z;
 
         maxAngle = maxAngle - startAngle;
         int indexAnimCurv = Random.Range(0, AnimCurves.Count);
-        
+
         while (timer < 5 * randomTime)
         {
             float angle = maxAngle * AnimCurves[indexAnimCurv].Evaluate(timer / (randomTime * 5));
-            Debug.Log(angle);
             CircleGo.transform.eulerAngles = new Vector3(0.0f, 0.0f, angle + startAngle);
             timer += Time.deltaTime;
             yield return 0;
         }
-        
-        //Debug.Log("Prize: " + prize[itemNumber]);
+
+        // относительно угла вычисляем ближайший Part
+        float angleStop = CircleGo.transform.eulerAngles.z;
+        Part part = PartsList.OrderBy(v => Math.Abs(v.Angle - angleStop)).First();
+        Debug.Log(part.Value);
 
         _isSpin = false;
         Spin.interactable = true;
-    }
-
-
-    private void OnApplicationQuit()
-    {
-        //SaveSystem.GetInstance().Save();
     }
 }
