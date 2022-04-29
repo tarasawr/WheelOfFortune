@@ -23,17 +23,16 @@ public class WheelOfFortune : MonoBehaviour
 
     void Start()
     {
-        //Count.text = SaveSystem.Data.Count.ToString();
-        //CommonCount.text = SaveSystem.Data.CommonCount.ToString();
+        //Count.text = SaveSystem.GetInstance().Data.Count.ToString();
+        //CommonCount.text = SaveSystem.GetInstance().Data.CommonCount.ToString();
         InitWheel();
-
-        _isSpin = false;
-        Spin.interactable = true;
-        
     }
 
     private void InitWheel()
     {
+        _isSpin = false;
+        Spin.interactable = true;
+        
         _anglePart = 360f / PartsList.Count;
         
         foreach (Part part in PartsList) 
@@ -56,18 +55,14 @@ public class WheelOfFortune : MonoBehaviour
         Spin.interactable = !_isSpin;
 
         int randomTime = Random.Range(1, 4);
-        int itemNumber = PartsList.Count;
         
-
-        float maxAngle = 360 * randomTime + (itemNumber * _anglePart);
+        float maxAngle = 360 * randomTime + (PartsList.Count * _anglePart);
         float timer = 0.0f;
         float startAngle = CircleGo.transform.eulerAngles.z;
 
         maxAngle = maxAngle - startAngle;
         int indexAnimCurv = Random.Range(0, AnimCurves.Count);
         
-        //Debug.Log($"maxAngle {maxAngle}, startAngle {startAngle}");
-
         while (timer < 5 * randomTime)
         {
             float angle = maxAngle * AnimCurves[indexAnimCurv].Evaluate(timer / (randomTime * 5));
@@ -77,7 +72,7 @@ public class WheelOfFortune : MonoBehaviour
             yield return 0;
         }
         
-        Debug.Log("Prize: " + prize[itemNumber]);
+        //Debug.Log("Prize: " + prize[itemNumber]);
 
         _isSpin = false;
         Spin.interactable = true;
@@ -86,6 +81,6 @@ public class WheelOfFortune : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        SaveSystem.Save();
+        //SaveSystem.GetInstance().Save();
     }
 }

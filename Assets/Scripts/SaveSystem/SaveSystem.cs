@@ -2,32 +2,48 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public static class SaveSystem
+public class SaveSystem
+{
+    public Data Data;
+    
+    private static SaveSystem _instance;
+
+    private SaveSystem()
     {
-        public static Data Data;
-        
-        public static void Save()
+        Load();
+    }
+
+    public static SaveSystem GetInstance()
+    {
+        if (_instance == null)
+            _instance = new SaveSystem();
+        return _instance;
+    }
+
+    
+    public void Save()
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/Data.fun";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        formatter.Serialize(stream, Data);
+        stream.Close();
+    }
+
+    public void Load()
+    {
+        string path = Application.persistentDataPath + "/Data.fun";
+        Debug.Log(path);
+        if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            string path = Application.persistentDataPath + "/Data.fun";
-            FileStream stream = new FileStream(path, FileMode.Create);
-            
-            formatter.Serialize(stream, Data);
-            stream.Close();
+            FileStream stream = new FileStream(path, FileMode.Open);
+            Data = formatter.Deserialize(stream) as Data;
         }
-
-        public static void Load()
+        else
         {
-            string path = Application.persistentDataPath + "/Data.fun";
-            if (File.Exists(path))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                FileStream stream = new FileStream(path, FileMode.Open);
-                Data =  formatter.Deserialize(stream) as Data;
-            }
-            else
-            {
-                Debug.Log("Data not found" + path);
-            }
+            Debug.Log("Data not found" + path);
         }
     }
+}
