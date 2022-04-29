@@ -15,7 +15,7 @@ public class WheelOfFortune : MonoBehaviour
     public List<AnimationCurve> AnimCurves;
 
     private float _anglePart;
-    private bool _isSpin;
+    private bool _isSpining;
     private int[] _partValues = {10, 100, 1000, 10000};
 
     void Start()
@@ -25,25 +25,31 @@ public class WheelOfFortune : MonoBehaviour
 
     private void InitWheel()
     {
-        _isSpin = false;
+        _isSpining = false;
         Spin.interactable = true;
 
         _anglePart = 360f / PartsList.Count;
 
+        MixParts();
+        
+        CircleGo.transform.eulerAngles = Vector3.zero;
+    }
+
+    private void MixParts()
+    {
         for (int i = 0; i < PartsList.Count; i++)
         {
             Part p = PartsList[i];
             p.Value = _partValues[Random.Range(0, _partValues.Length)];
             p.Angle = _anglePart * i;
         }
-
-        CircleGo.transform.eulerAngles = Vector3.zero;
     }
 
     public void StartSpin()
     {
-        if (!_isSpin)
+        if (!_isSpining)
         {
+            MixParts();
             SoundManager.StopAllSounds();
             SoundManager.Play("spin");
             StartCoroutine(Spining());
@@ -52,8 +58,8 @@ public class WheelOfFortune : MonoBehaviour
 
     private IEnumerator Spining()
     {
-        _isSpin = true;
-        Spin.interactable = !_isSpin;
+        _isSpining = true;
+        Spin.interactable = !_isSpining;
 
         int randomTime = Random.Range(1, 4);
 
@@ -78,7 +84,7 @@ public class WheelOfFortune : MonoBehaviour
         Part part = PartsList.OrderBy(v => Math.Abs(v.Angle - angleStop)).First();
         Debug.Log(part.Value);
 
-        _isSpin = false;
+        _isSpining = false;
         Spin.interactable = true;
         SoundManager.StopAllSounds();
     }

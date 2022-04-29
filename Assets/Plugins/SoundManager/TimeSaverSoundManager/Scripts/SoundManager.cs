@@ -264,7 +264,9 @@ public class SoundManager : MonoBehaviour {
 	private IEnumerator DownloadStreamSound(Sound snd, int index){
 		AudioClip clip = null;
 		Debug.Log("TSSM: Starting downloading "+snd.name+".");
+#pragma warning disable 618
 		WWW www = new WWW(snd.URL);
+#pragma warning restore 618
 		clip = www.GetAudioClip(snd._3D);
 		_AllSounds[index].clip = clip;
 		yield return www;
