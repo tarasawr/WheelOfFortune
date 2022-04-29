@@ -5,7 +5,7 @@ public class Menu : MonoBehaviour
 {
     public void Start()
     {
-        SoundManager.Play("menu");
+        SoundManager.Play("Menu");
     }
 
     public void StartButton_OnClick()

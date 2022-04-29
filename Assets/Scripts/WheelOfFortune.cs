@@ -42,7 +42,12 @@ public class WheelOfFortune : MonoBehaviour
 
     public void StartSpin()
     {
-        if (!_isSpin) StartCoroutine(Spining());
+        if (!_isSpin)
+        {
+            SoundManager.StopAllSounds();
+            SoundManager.Play("spin");
+            StartCoroutine(Spining());
+        }
     }
 
     private IEnumerator Spining()
@@ -75,5 +80,6 @@ public class WheelOfFortune : MonoBehaviour
 
         _isSpin = false;
         Spin.interactable = true;
+        SoundManager.StopAllSounds();
     }
 }
