@@ -1,49 +1,39 @@
 ﻿using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 public class SaveSystem
 {
     public Data Data;
-    
     private static SaveSystem _instance;
 
     private SaveSystem()
     {
-        Load();
+        LoadData();
     }
 
     public static SaveSystem GetInstance()
     {
-        if (_instance == null)
-            _instance = new SaveSystem();
+        if (_instance == null) _instance = new SaveSystem();
         return _instance;
     }
 
-    
-    public void Save()
+    public void SaveData()
     {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/Data.fun";
-        FileStream stream = new FileStream(path, FileMode.Create);
-
-        formatter.Serialize(stream, Data);
-        stream.Close();
+        string path = Application.persistentDataPath + "/Data.json";
+        File.WriteAllText(path, JsonUtility.ToJson(Data));
     }
 
-    public void Load()
+    public void LoadData()
     {
-        string path = Application.persistentDataPath + "/Data.fun";
-        Debug.Log(path);
+        string path = Application.persistentDataPath + "/Data.json";
         if (File.Exists(path))
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-            Data = formatter.Deserialize(stream) as Data;
+            Data = JsonUtility.FromJson<Data>(
+                File.ReadAllText(path));
         }
         else
         {
-            Debug.Log("Data not found" + path);
+            Data = new Data();
         }
     }
 }

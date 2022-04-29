@@ -3,35 +3,32 @@ using UnityEngine.UI;
 
 public class View : MonoBehaviour
 {
-   public Text CommonText;
-   public Text CurrentText;
+    public Text CommonText;
+    public Text CurrentText;
 
 
-   private void Start()
-   {
-      //Init Saver
-      //CommonText.text = SaveSystem.GetInstance().Data
-      //CurrentText.text = data.Currrent.ToString();
-   }
+    private void Start()
+    {
+        CommonText.text = SaveSystem.GetInstance().Data.CommonCount.KiloFormat();
+    }
 
-   public void RefreshData(Data data)
-   {
-      CommonText.text = data.CommonCount.ToString();
-      CurrentText.text = data.Currrent.ToString();
-   }
+    public void RefreshData(int current)
+    {
+        int common = current + SaveSystem.GetInstance().Data.CommonCount;
 
-   private void OnApplicationQuit()
-   {
-      //Save data
-   }
+        CommonText.text = common.KiloFormat();
+        CurrentText.text = current.KiloFormat();
 
-   private void OnApplicationPause(bool pauseStatus)
-   {
-      
-   }
+        SaveSystem.GetInstance().Data.CommonCount = common;
+    }
 
-   private void OnApplicationFocus(bool hasFocus)
-   {
-      
-   }
+    private void OnApplicationQuit()
+    {
+        SaveSystem.GetInstance().SaveData();
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        SaveSystem.GetInstance().SaveData();
+    }
 }

@@ -427,7 +427,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Current
+  m_Text: Your Win
 --- !u!222 &139242529
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2171,6 +2171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c348b638ecab67545980f3e7c562e88a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  View: {fileID: 759971785}
   Spin: {fileID: 709661840}
   CircleGo: {fileID: 736040818}
   PartsList:

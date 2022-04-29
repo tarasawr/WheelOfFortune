@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class WheelOfFortune : MonoBehaviour
 {
+    public View View;
     public Button Spin;
     public GameObject CircleGo;
 
@@ -31,7 +32,7 @@ public class WheelOfFortune : MonoBehaviour
         _anglePart = 360f / PartsList.Count;
 
         MixParts();
-        
+
         CircleGo.transform.eulerAngles = Vector3.zero;
     }
 
@@ -82,7 +83,8 @@ public class WheelOfFortune : MonoBehaviour
         // относительно угла вычисляем ближайший Part
         float angleStop = CircleGo.transform.eulerAngles.z;
         Part part = PartsList.OrderBy(v => Math.Abs(v.Angle - angleStop)).First();
-        Debug.Log(part.Value);
+
+        View.RefreshData(part.Value);
 
         _isSpining = false;
         Spin.interactable = true;

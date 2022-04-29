@@ -13,5 +13,8 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    private void OnEnable() { SaveSystem.GetInstance().Load(); }
+    private void OnEnable()
+    {
+        SaveSystem.GetInstance().LoadData();
+    }
 }
